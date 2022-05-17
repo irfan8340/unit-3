@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice</title>
+    <style>
+        #winner {
+            width: 250px;
+            height: 50px;
+            border: 2px solid gray;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: rgb(5, 119, 14);
+        }
+
+        div {
+            width: 250px;
+            margin: 25px auto;
+        }
+
+        #member-1,
+        #member-2,
+        #member-3 {
+            border: 2px solid gray;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        button {
+            margin-left: 45%;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        .green {
+            background-color: green;
+            color: white;
+        }
+
+        .blue {
+            background-color: rgb(22, 22, 204);
+            color: white;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .yellow {
+            background-color: yellow;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="winner"></div>
+    <Div id="member-1">A</Div>
+    <Div id="member-2">B</Div>
+    <Div id="member-3">C</Div>
+    <button id="roll">ROLL THE DICE</button>
+</body>
+
+</html>
+<script>
+    document.querySelector("#roll").addEventListener("click", rollDice)
+
+    function rollDice() {
+        var mem1 = document.querySelector("#member-1")
+        var mem2 = document.querySelector("#member-2")
+        var mem3 = document.querySelector("#member-3")
+        var winner = document.querySelector("#winner")
+
+        var num1 = randomNum(1, 6);
+        var num2 = randomNum(1, 6);
+        var num3 = randomNum(1, 6);
+        mem1.innerText = num1;
+        mem2.innerText = num2;
+        mem3.innerText = num3;
+
+        // For dice A
+        if (num1 > num2 && num1 > num3) {
+            winner.innerText = "Dice A: " + " " + num1;
+            mem2.classList.remove("green")
+            mem3.classList.remove("green")
+            mem1.setAttribute("class", "green")
+        }
+        else if (num1 === num2 && num1 === num3) {
+            // mem2.classList.remove("blue")
+            // mem3.classList.remove("blue")
+            mem1.setAttribute("class", "blue")
+        }
+        else if (num1 === num2) {
+            mem3.classList.remove("blue")
+            mem1.setAttribute("class", "blue")
+            mem2.setAttribute("class", "blue")
+        }
+        else if (num1 === num3) {
+            mem2.classList.remove("blue")
+            mem1.setAttribute("class", "blue")
+            mem3.setAttribute("class", "blue")
+        }
+        else if (num1 < num2 && num1 < num3) {
+            mem2.classList.remove("red")
+            mem3.classList.remove("red")
+            mem1.setAttribute("class", "red")
+        }
+        else if (num1 > num2 && num1 < num3 || num1 < num2 && num1 > num3) {
+            mem2.classList.remove("yellow")
+            mem3.classList.remove("yellow")
+            mem1.setAttribute("class", "yellow")
+        }
+
+        // For dice B
+        if (num2 > num1 && num2 > num3) {
+            winner.innerText = "Dice B: " + " " + num2;
+            mem1.classList.remove("green")
+            mem3.classList.remove("green")
+            mem2.setAttribute("class", "green")
+        }
+        else if (num2 === num1 && num2 === num3) {
+            // mem1.classList.remove("blue")
+            // mem3.classList.remove("blue")
+            mem2.setAttribute("class", "blue")
+        }
+        else if (num2 === num1) {
+            mem3.classList.remove("blue")
+            mem1.setAttribute("class", "blue")
+            mem2.setAttribute("class", "blue")
+        }
+        else if (num2 === num3) {
+            mem1.classList.remove("blue")
+            mem2.setAttribute("class", "blue")
+            mem3.setAttribute("class", "blue")
+        }
+        else if (num2 < num1 && num2 < num3) {
+            mem1.classList.remove("red")
+            mem3.classList.remove("red")
+            mem2.setAttribute("class", "red")
+        }
+        else if (num2 > num1 && num2 < num3 || num2 < num1 && num2 > num3) {
+            mem1.classList.remove("yellow")
+            mem3.classList.remove("yellow")
+            mem2.setAttribute("class", "yellow")
+        }
+
+        // For dice C
+        if (num3 > num1 && num3 > num2) {
+            winner.innerText = "Dice C: " + " " + num3;
+            mem1.classList.remove("green")
+            mem2.classList.remove("green")
+            mem3.setAttribute("class", "green")
+        }
+        else if (num3 === num1 && num3 === num2) {
+            // mem2.classList.remove("blue")
+            // mem1.classList.remove("blue")
+            mem3.setAttribute("class", "blue")
+        }
+        else if (num3 === num2) {
+            mem1.classList.remove("blue")
+            mem3.setAttribute("class", "blue")
+            mem2.setAttribute("class", "blue")
+        }
+        else if (num3 === num1) {
+            mem2.classList.remove("blue")
+            mem1.setAttribute("class", "blue")
+            mem3.setAttribute("class", "blue")
+        }
+        else if (num3 < num1 && num3 < num2) {
+            mem2.classList.remove("red")
+            mem1.classList.remove("red")
+            mem3.setAttribute("class", "red")
+        }
+        else if (num3 > num2 && num3 < num1 || num3 < num2 && num3 > num1) {
+            mem2.classList.remove("yellow")
+            mem1.classList.remove("yellow")
+            mem3.setAttribute("class", "yellow")
+        }
+    }
+
+    function randomNum(min, max) {
+        min = Math.ceil(min)
+        max = Math.floor(max)
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+</script>
