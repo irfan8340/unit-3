@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 80%;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        #container>div {
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            padding-bottom: 15px;
+        }
+
+        .counter {
+            width: 100%;
+            height: 100px;
+            font-size: 25px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
+        .product>img {
+            width: 100%;
+            height: 350px;
+        }
+
+        h3,
+        p {
+            margin: 10px 0px;
+            text-align: center;
+        }
+
+        #btn {
+            /* border: 1px solid red; */
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .grn {
+            background-color: green;
+            color: white;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: green;
+            border: none;
+            color: white;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="counter">
+        <p>0</p>
+    </div>
+    <div id="container">
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    var arr = JSON.parse(localStorage.getItem("products"))
+    var count = JSON.parse(localStorage.getItem("counter"))
+
+    displayData(arr)
+    document.querySelector(".counter>p").innerText = `Items: ${count}`;
+
+    function displayData(data) {
+        document.querySelector("#container").innerHTML = ""
+
+        data.forEach(function (elem, index) {
+            let card = document.createElement("div")
+            card.setAttribute("class", "product")
+
+            let img = document.createElement("img")
+            img.setAttribute("src", elem.ImageURL)
+
+            let title = document.createElement("h3")
+            title.innerText = elem.name;
+
+            let ctg = document.createElement("p")
+            ctg.innerText = elem.categary;
+
+            let price = document.createElement("p")
+            price.innerText = elem.price;
+
+            let gender = document.createElement("p")
+            gender.innerText = elem.gender;
+
+            let div = document.createElement("div")
+            div.setAttribute("id", "btn")
+
+            let remove = document.createElement("button")
+            remove.innerText = "Remove"
+            remove.addEventListener("click", function () {
+                Delfunc(elem, index)
+            })
+
+            let sold = document.createElement("button")
+            sold.innerText = elem.sold;
+            sold.addEventListener("click", function () {
+                soldfunc(elem, index)
+            })
+
+            div.append(remove, sold)
+            card.append(img, title, ctg, price, gender, div)
+            document.querySelector("#container").append(card)
+        })
+    }
+
+    function soldfunc(elem, index) {
+        let btn = document.querySelector("button:last-child")
+        if (btn.innerText === "false") {
+            btn.innerText = "true"
+            btn.classList.remove("grn")
+            btn.setAttribute("class", "red")
+        }
+        else {
+            btn.innerText = "false"
+            btn.classList.remove("red")
+            btn.setAttribute("class", "grn")
+        }
+    }
+
+    function Delfunc(elem, index) {
+        arr.splice(index, 1)
+        localStorage.setItem("products", JSON.stringify(arr))
+        displayData(arr);
+
+        if (count == 0) {
+            count = 0;
+        }
+        else {
+            count--;
+            localStorage.setItem("counter", count)
+        }
+        window.location.reload()
+    }
+</script>
