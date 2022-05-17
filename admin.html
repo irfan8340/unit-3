@@ -41,6 +41,7 @@
 
     document.querySelector("#form").addEventListener("submit", addProducts)
 
+    var count = JSON.parse(localStorage.getItem("counter")) || 0;
     var arr = JSON.parse(localStorage.getItem("products")) || [];
     function Products(name, categary, ImageURL, price, gender, sold){
         this.name = name;
@@ -64,6 +65,8 @@
         let p = new Products(name, categary, ImageURL, price, gender, sold)
         arr.push(p)
         localStorage.setItem("products", JSON.stringify(arr))
+        count++;
+        localStorage.setItem("counter", JSON.stringify(count))
         
         form.name.value = ""
         form.categary.value = ""
