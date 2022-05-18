@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Array</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+
+    function CutomArr() {
+
+        Object.defineProperty(this, "length", {
+            value: 0,
+            writable: true,
+            enumerable: false
+        });
+        this.length = arguments.length;
+        for (let i = 0; i < arguments.length; i++) {
+            this[i] = arguments[i]
+        }
+    }
+
+    let arr = new CutomArr(1, 2, 3, 4, 5, 6, 7)
+
+    CutomArr.prototype.joro = function (value) {
+        this[this.length] = value;
+        this.length++;
+    }
+
+    CutomArr.prototype.hatao = function (value) {
+        delete this[this.length - 1]
+        this.length--;
+    }
+
+    CutomArr.prototype.top = function (value) {
+        // console.log(this[this.length-1])
+        return this[this.length - 1]
+    }
+
+    CutomArr.prototype.chhapo = function (value) {
+        let arr = Object.values(this);
+        // console.log(arr)
+        let output = [];
+        for (let i = 0; i < arr.length; i++) {
+            output.push(arr[i])
+        }
+        console.log(output);
+    }
+    
+    CutomArr.prototype.ultaChhapo = function (value) {
+        let arr = Object.values(this);
+        // console.log(arr)
+        let output = [];
+        for (let i = arr.length-1; i >= 0; i--) {
+            output.push(arr[i])
+        }
+        console.log(output);
+    }
+    
+    CutomArr.prototype.size = function (value) {
+        let arr = Object.values(this);
+        console.log(arr.length)
+    }
+
+    // arr.joro(9)
+    // arr.hatao()
+    // let upr = arr.top()
+    arr.chhapo()
+    arr.ultaChhapo()
+    arr.size()
+    // console.log(upr)
+    // console.log(Object.values(arr))
+
+</script>
