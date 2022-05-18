@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=">
+    <title>Inherit</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+    // const car = {
+    //     name : "car",
+    //     wheels : 4,
+    //     stiaring : "round",
+    //     body : true,
+    //     headlight : 2,
+    //     backlight : 2,
+    //     seats : true,
+    //     doors : 4
+    // }
+
+    // const scorpio = Object.create(car, {name: {value: "scorpio"}});
+    // // scorpio.name = "Scorpio"
+    // console.log(scorpio)
+
+
+    function Buildcar(name){
+        this.name = "car";
+        this.body = true;
+        this.wheels = 4;
+        this.headlight = 2;
+        this.backlight = 2;
+        this.seats = true;
+        this.doors = 4;
+        this.stiaring = "round"
+    }
+
+    Buildcar.prototype.changeName = function(name){
+        this.name = name;
+    }
+
+    let car = new Buildcar()
+    let car1 = new Buildcar()
+    let car2 = new Buildcar()
+
+    car.changeName("scorpio")
+    car1.changeName("ferari")
+    car2.changeName("Bugati")
+    
+    console.log(car, car1, car2);
+</script>
