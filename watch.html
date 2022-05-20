@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="start()">Start</button>
+    <button onclick="pause()">Pause</button>
+    
+    <div id="container"></div>
+</body>
+</html>
+<script>
+
+    let i = 0;
+
+    function start(){
+        let img = JSON.parse(localStorage.getItem("images"))
+        let container = document.querySelector("#container");
+
+        let defImg = document.createElement("img")
+        defImg.src = img[0]
+        container.append(defImg)
+        i++;
+
+        id = setInterval(function(){
+            
+            // it will change value of i after it reachs the length of the img
+            if(i === img.length){
+                i=0;
+            }
+
+            // it removing the previous image from container
+            container.innerHTML = null;
+            let url = img[i]
+            let image = document.createElement("img")
+            image.src = url;
+            //Here i appending image inside container
+            container.append(image);
+
+            i++;
+        }, 3000);
+    }
+
+    function pause(){
+        clearInterval(id)
+    }
+</script>
