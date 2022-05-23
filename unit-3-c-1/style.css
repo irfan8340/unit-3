@@ -1,0 +1,58 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#navbar+div{
+    width: 300px;
+    margin: 50px auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    padding: 25px 40px;
+    border-radius: 10px;
+}
+
+#products{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#products>input{
+    padding: 10px 15px;
+    margin: 5px;
+}
+
+#navbar{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#show_products{
+    padding: 10px 25px;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    border-radius: 6px;
+}
+
+#add_product{
+    padding: 10px 25px;
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    border-radius: 6px;
+}
+
