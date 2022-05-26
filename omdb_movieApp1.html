@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App </title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .search {
+            width: 60%;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .search>form>input:first-child {
+            width: 100%;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            margin-bottom: 25px;
+            border-radius: 60px;
+            text-align: center;
+        }
+
+        .search>form>input:last-child {
+            width: 120px;
+            margin: auto;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            background-color: teal;
+            color: white;
+        }
+
+        #display_movies {
+            width: 70%;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 400px;
+            gap: 50px 25px;
+        }
+
+        #display_movies>div{
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        }
+
+        #display_movies>div>img{
+            width: 100%;
+            height: 75%;
+        }
+        
+        #display_movies>div>h3{
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        #display_movies>div>p{
+            text-align: center;
+            margin-bottom: 10px;
+            color: gray;
+        }
+
+        h1{
+            text-align: center;
+            margin-top: 25px;
+            color: crimson;
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Search Movies By Name</h1>
+    <div class="search">
+        <form action="">
+            <input type="text" name="" id="title" placeholder="Search Movies.....">
+            <input type="submit">
+        </form>
+    </div>
+
+    <div id="display_movies">
+
+    </div>
+</body>
+
+</html>
+<script>
+
+    document.querySelector("form").addEventListener("submit", getInput)
+
+    // Here geting the movie name from users using input form and concatanating with url than accessing the data 
+    //using fetch async await function and handeling the promise
+    function getInput() {
+        event.preventDefault();
+        let title = document.querySelector("#title").value
+        const url = "http://www.omdbapi.com/?apikey=18a47024&s=" + title;
+
+        async function movieData() {
+
+            try {
+                let res = await fetch(url)
+                let data = await res.json()
+                displayData(data.Search)
+                console.log(data.Search)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        movieData();
+    }
+
+    // Here using this displayData function displaying movies which matches with movie title
+    function displayData(data) {
+
+        document.querySelector("#display_movies").innerHTML = null;
+
+        data.forEach(function (elem) {
+
+            let card = document.createElement("div")
+
+            let poster = document.createElement("img")
+            poster.src = elem.Poster;
+
+            let title = document.createElement("h3")
+            title.innerText = elem.Title;
+
+            let year = document.createElement("p")
+            year.innerText = `Year ${elem.Year}`
+
+            card.append(poster, title, year)
+            document.querySelector("#display_movies").append(card)
+        })
+    }
+
+</script>

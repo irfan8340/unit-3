@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Mecdonalds</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #order {
+            width: 60%;
+            margin: 100px auto;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(auto);
+            gap: 50px 25px;
+            padding: 25px;
+        }
+
+        #orderFood {
+            display: block;
+            margin: auto;
+            padding: 10px 20px;
+            background-color: dodgerblue;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+        }
+
+        #orderFood:hover {
+            background-color: teal;
+            cursor: pointer;
+        }
+
+        #display_order {
+            width: 60%;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        #display_order>img {
+            width: 100%;
+        }
+
+        #display_order>div {
+            display: flex;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="order">
+        <div>
+            <input type="checkbox" name="one" value="1">
+            <label for="one">Chicken McNuggets</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="two" value="2">
+            <label for="two">Spicy Crispy Chicken Sandwich</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="three" value="3">
+            <label for="three">Big Mac</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="four" value="4">
+            <label for="four">World Famous Fries</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="five" value="5">
+            <label for="five">Quarter Pounder with Cheese</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="six" value="6">
+            <label for="six">Iced Coffee</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="seven" value="7">
+            <label for="seven">Egg McMuffin</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="eight" value="8">
+            <label for="eight">Sausage Burrito</label>
+        </div>
+    </div>
+    <button id="orderFood">Order Food</button>
+
+    <div id="display_order">
+        <div>
+            <img src="" alt="" id="default">
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+    document.getElementById("orderFood").addEventListener("click", orderFood)
+    let checkvalue = null;
+
+    let foodImage = [
+        {
+            num: 1,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Chicken-McNuggets-4pc-1:1-4-product-tile-desktop"
+        },
+        {
+            num: 2,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-spicy-crispy-chicken-sandwich:1-4-product-tile-desktop"
+        },
+        {
+            num: 3,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:1-4-product-tile-desktop"
+        },
+        {
+            num: 4,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-fries-small:1-4-product-tile-desktop"
+        },
+        {
+            num: 5,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Quarter-Pounder-with-Cheese-1:1-4-product-tile-desktop"
+        },
+        {
+            num: 6,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Premium-Roast-Iced-Coffee-Medium:1-4-product-tile-desktop"
+        },
+        {
+            num: 7,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Egg-McMuffin-1:1-4-product-tile-desktop"
+        },
+        {
+            num: 8,
+            url: "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Sausage-Burrito-1:1-4-product-tile-desktop"
+        },
+    ]
+
+
+    function checkOrder(data) {
+
+        return true;
+    }
+
+    function orderFood() {
+
+        let checked = document.querySelectorAll("input")
+        let img = document.querySelector("#default")
+        img.src = "https://media3.giphy.com/media/l3nWhI38IWDofyDrW/200w.webp?cid=ecf05e47etysuk5nww12m2yoq9xvfa8e5qcaqkfjjqnyuh7p&rid=200w.webp&ct=g"
+
+
+        for (let i = 0; i < checked.length; i++) {
+
+            // checking which checkbox is checked by user than passing the value in the checkvalue variable
+            if (checked[i].checked) {
+                checkvalue = checked[i].value
+            }
+        }
+
+        let time = Math.random() * 10000;
+        console.log(time)
+        let order_Promise = new Promise(function (resolve, reject) {
+
+            let order = checkOrder()
+
+            setTimeout(function () {
+
+                if (order) {
+                    resolve("Yes")
+                }
+                else {
+                    reject("No")
+                }
+            }, time)
+        })
+
+        order_Promise.then(function (value) {
+
+            foodImage.forEach(function (elem) {
+
+                if (elem.num == checkvalue) {
+                    let img = document.querySelector("#default")
+                    img.src = "";
+
+                    let newImg = document.createElement("img")
+                    let id = document.createElement("span")
+                    id.innerText = `Order ID: ${elem.num}`
+                    newImg.src = elem.url;
+
+                    document.querySelector("#display_order>div").append(id, newImg)
+                }
+            })
+        });
+
+        order_Promise.catch(function (value) {
+            let image = document.querySelector("#default")
+            image.src = "https://media.giphy.com/media/3o7buakWd3wWO9xKDe/giphy.gif";
+        })
+    }
+
+</script>

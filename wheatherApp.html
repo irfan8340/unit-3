@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Wheather App</title>
+</head>
+
+<body>
+    <form action="" id="form">
+        <input type="text" name="" id="city">
+        <input type="submit" name="" id="">
+    </form>
+
+    <div id="display"></div>
+</body>
+
+</html>
+<script>
+
+    //https://api.openweathermap.org/data/2.5/weather?q=patna&appid=3c7b0ff960655302518560d89b04dab8
+    const api = "3c7b0ff960655302518560d89b04dab8"
+    document.getElementById("form").addEventListener("submit", getdata)
+
+    async function getdata() {
+        event.preventDefault()
+        let city = document.getElementById("city").value
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api}`
+
+        let res = await fetch(url)
+        let data = await res.json()
+
+        displayData(data)
+        console.log(data)
+    }
+
+
+    function displayData(data) {
+
+    }
+
+</script>
