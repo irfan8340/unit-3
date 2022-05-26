@@ -133,7 +133,10 @@
                 displayData(data.Search)
                 console.log(data.Search)
             } catch (err) {
-                console.log(err);
+                let img = document.createElement("img")
+                img.src = "https://media1.giphy.com/media/CoND5j6Bn1QZUgm1xX/200w.webp?cid=ecf05e47r5wtdmu1li7vxqkp2oki2u61da631efiqzen165y&rid=200w.webp&ct=g"
+                document.querySelector("#display_movies").append(img);
+                // console.log(err);
             }
         }
         movieData();
