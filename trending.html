@@ -16,14 +16,27 @@
             gap: 25px;
         }
 
-        #popular>div{
+        #popular>div {
             box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             border-radius: 10px;
+        }
+
+        #popular>div>img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: teal;
+            font-size: 2.5em;
         }
     </style>
 </head>
 
 <body>
+    <h1>Popular Movies</h1>
     <div id="popular">
 
     </div>
@@ -62,25 +75,25 @@
         let container = document.getElementById("popular")
         container.innerHTML = null;
 
-        data.forEach(function(elem){
+        data.forEach(function (elem) {
 
             let card = document.createElement("div")
 
             let poster = document.createElement("img")
-            poster.src = elem.poster_path;
+            poster.src = `https://image.tmdb.org/t/p/w500/${elem.poster_path}`;
 
             let title = document.createElement("h3")
             title.innerText = elem.title;
 
             let year = document.createElement("p")
             year.innerText = elem.release_date;
-                        
+
             let rating = document.createElement("p")
             rating.innerText = `Rating ${elem.vote_average}`;
-            
+
             let popular = document.createElement("p")
             popular.innerText = `Popularity ${elem.popularity}`;
-            
+
             card.append(poster, title, year, rating, popular)
             container.append(card);
         })
