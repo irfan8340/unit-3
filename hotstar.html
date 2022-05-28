@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotstar</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        #search {
+            width: 40%;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin: 50px auto;
+        }
+
+        input {
+            width: 400px;
+            margin: auto;
+            padding: 25px 30px;
+            border-radius: 20px;
+            border: none;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        }
+
+        #movies {
+            width: 452px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(1, fr);
+            grid-auto-rows: 120px;
+            row-gap: 10px;
+            background-color: #100f0f;
+            overflow: auto;
+            border-radius: 6px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-top: 25px;
+            color: red;
+        }
+
+        #movies>div {
+            background-color: #0c111b;
+            display: flex;
+            margin: 0px 20px;
+            justify-content: space-between;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #movies>div>img {
+            width: 50%;
+            height: 100%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        #info {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            /* border: 1px solid red; */
+        }
+
+        #info>h3 {
+            color: white;
+            font-size: 1em;
+            margin-left: 15px;
+        }
+
+        #info>p {
+            color: gray;
+            font-size: 0.8em;
+            margin-left: 15px;
+        }
+
+        #movieDetail {
+            width: 90%;
+            margin: 50px auto;
+            display: flex;
+            border-radius: 10px;
+            background-color: #0c111b;
+        }
+
+        #movieDetail>div {
+            width: 50%;
+            height: 500px;
+        }
+
+        #imgDiv>img {
+            width: 100%;
+            height: 100%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        #data {
+            /* border: 1px solid red; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: left;
+            padding: 0px 25px;
+        }
+
+        #data>h2 {
+            font-size: 2.5em;
+            color: white;
+        }
+
+        #data>p:nth-child(2){
+            color: gray;
+            font-size: 1.5em;
+        }
+
+        #data>p:last-child{
+            margin-top: 20px;
+            color: white;
+            text-align: justify;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Search Movies</h1>
+    <div id="search">
+        <input type="text" id="query" oninput="debounsingFunc(main, 1000)" placeholder="Search Movies...">
+        <div id="movies"></div>
+    </div>
+
+    <div id="movieDetail">
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    // async function return promise
+    // cath the input data
+    // fetch the data from omdb
+    // append the data
+
+    let moviesDiv = document.getElementById("movies")
+    let id;
+
+    // this function fetching the data using fetch api from omdb
+    async function searchMovies(q) {
+
+        let url = `https://www.omdbapi.com/?s=${q}}&apikey=18a47024`
+
+        try {
+
+            let res = await fetch(url)
+            let data = await res.json()
+            return data.Search; // returning the search result 
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // getting the users input when he enter something
+    async function main() {
+
+        //catching the input value
+        let query = document.getElementById("query").value
+        let response = searchMovies(query) // getting the repose and converting it.
+
+        let data = await response
+        append(data) // passing data inside append function to show
+    }
+
+    // this function appending all data on DOM
+    function append(data) {
+
+        moviesDiv.innerHTML = null;
+        // here chechking if data is undefined than showing not found as result
+        if (data === undefined) {
+
+            let notFound = document.createElement("h3")
+            notFound.innerText = "Not Found"
+            notFound.style.textAlign = "center"
+            notFound.style.color = "white"
+            notFound.style.marginTop = "25px"
+            moviesDiv.append(notFound);
+        };
+
+        data.forEach(function (elem) {
+
+            let card = document.createElement("div")
+            card.addEventListener("click", function () {
+                showDetail(elem)
+            })
+
+            let poster = document.createElement("img")
+            poster.src = elem.Poster;
+
+            let div = document.createElement("div")
+            div.setAttribute("id", "info")
+
+            let title = document.createElement("h3")
+            title.innerText = elem.Title;
+
+            let year = document.createElement("p")
+            year.innerText = `Year ${elem.Year}`
+
+            div.append(title, year)
+            card.append(poster, div)
+            moviesDiv.append(card)
+        })
+    }
+
+    // Debounsing the fetch request
+    function debounsingFunc(func, delay) {
+
+        if (id) clearTimeout(id);
+
+        id = setTimeout(() => {
+            func()
+        }, delay);
+    }
+
+    function showDetail(elem) {
+
+        moviesDiv.innerHTML = null;
+        let div = document.getElementById("movieDetail")
+        div.innerHTML = null;
+
+        let imgDiv = document.createElement("div")
+        imgDiv.setAttribute("id", "imgDiv")
+
+        let data = document.createElement("div")
+        data.setAttribute("id", "data")
+
+        let poster = document.createElement("img")
+        poster.src = elem.Poster;
+
+        let title = document.createElement("h2")
+        title.innerText = elem.Title;
+
+        let year = document.createElement("p")
+        year.innerText = `Year ${elem.Year}`;
+
+        let info = document.createElement("p")
+        info.innerText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui quas impedit eos iste unde sint ex nulla numquam nesciunt ab cumque expedita praesentium aspernatur suscipit in et provident, iusto ducimus!`
+
+        imgDiv.append(poster)
+        data.append(title, year, info)
+        div.append(imgDiv, data);
+
+        document.getElementById("query").value = null;
+    }
+</script>
