@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    #order-form {
+      width: 300px;
+      margin: 100px auto;
+      padding: 20px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+      border-radius: 10px;
+    }
+
+    #confirm {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    #confirm>input {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: red;
+      margin-bottom: 20px;
+    }
+
+    #confirm>input:last-child {
+      border-radius: 6px;
+      padding: 15px 25px;
+      background-color: teal;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="order-form">
+    <!--Add your form html element here-->
+    <!--In form, give #name,#number and #address as HTML id's to relevant input elements -->
+    <!-- confirm button with id "confirm" -->
+    <h2>Checkout</h2>
+    <form action="" id="confirm">
+      <input type="text" name="" id="name" placeholder="Enter name">
+      <input type="number" name="" id="number" placeholder="Enter Number">
+      <input type="text" name="" id="address" placeholder="Enter address">
+      <input type="submit">
+    </form>
+  </div>
+</body>
+
+</html>
+
+<script>
+
+  let form = document.querySelector("#confirm")
+  form.addEventListener("submit", order)
+
+  function order() {
+    event.preventDefault()
+
+    alert("Your order is accepted")
+
+    // second at 3 seconds
+    setTimeout(() => {
+      alert("Your order is being Prepared")
+    }, 3000);
+
+    // third at 8 seconds we have add previous alert time with next alert beacuse after the submit of form
+    //the count of seconds of all others settimeout is started that why we have to add previous time.
+    setTimeout(() => {
+      alert("Your order is being packed")
+    }, 11000);
+
+    // fourth at 10 seconds
+    setTimeout(() => {
+      alert("Your order is out for delivery")
+    }, 21000);
+
+    // fifth at 12 seconds
+    setTimeout(() => {
+      alert("Order delivered")
+    }, 33000);
+
+    form.name.value = null;
+    form.number.value = null;
+    form.address.value = null;
+  }
+</script>

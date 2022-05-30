@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bucket</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    #bucket {
+      width: 80%;
+      margin: 50px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 50px 25px;
+    }
+
+    #bucket>div {
+      border-radius: 10px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
+
+    #bucket>div>img {
+      height: 60%;
+      width: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #total_amount{
+      margin-top: 25px;
+      margin-left: 25px;
+      font-size: 2em;
+    }
+
+    #confirm_checkout{
+      display: block;
+      margin: auto;
+      border-radius: 6px;
+      padding: 15px 25px;
+      background-color: teal;
+      color: white;
+      border: none;
+      font-size: 20px;
+    }
+
+    #remove_coffee{
+      border-radius: 6px;
+      padding: 15px 25px;
+      background-color: teal;
+      color: white;
+      border: none;
+    }
+
+    a{
+      text-decoration: none;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="total-div">
+    <h3 id="total_amount">
+      <!--Show bucket total here, do not add anything only Total value. Not even "Total - 1200Rs" but like this "1200" -->
+    </h3>
+  </div>
+  <div id="bucket">
+    <!--Show all coffee added to bucket here-->
+    <!-- add an remove button to each coffee so that you can remove that item from bucket, give the button HTML id as 'remove_coffee' -->
+  </div>
+  <button id="confirm_checkout"><a href="checkout.html">Checkout</a></button>
+  <!-- checkout link  -->
+</body>
+
+</html>
+<script>
+
+  let bucketArr = JSON.parse(localStorage.getItem("coffee"))
+  let count = JSON.parse(localStorage.getItem("coffeeCount"))
+  let total = localStorage.getItem("total_amount");
+  document.querySelector("#total_amount").innerText = total;
+
+  displayData(bucketArr)
+
+  function displayData(data) {
+
+    let bucket = document.querySelector("#bucket")
+    bucket.innerHTML = null;
+
+    data.forEach(function (elem, index) {
+
+      let card = document.createElement("div")
+
+      let image = document.createElement("img")
+      image.src = elem.image;
+
+      let title = document.createElement("h3")
+      title.innerText = elem.title;
+
+      let des = document.createElement("p")
+      des.innerText = elem.description;
+
+      let price = document.createElement("p")
+      price.innerText = elem.price;
+
+      let btn = document.createElement("button")
+      btn.innerText = "Remove"
+      btn.setAttribute("id", "remove_coffee")
+      btn.addEventListener("click", function () {
+        removeItem(elem, index)
+      })
+
+      card.append(image, title, des, price, btn)
+      bucket.append(card)
+    })
+  }
+
+  function removeItem(elem, index) {
+
+    bucketArr.splice(index, 1)
+    localStorage.setItem("coffee", JSON.stringify(bucketArr))
+    displayData(bucketArr)
+
+    // reducing the total amount after deleting the coffee from bucket
+    total = Number(total)-Number(elem.price);
+    localStorage.setItem("total_amount", total)
+    document.querySelector("#total_amount").innerText = total;
+
+    // reducing count also 
+    count--;
+    localStorage.setItem("coffeeCount", count)
+  }
+</script>

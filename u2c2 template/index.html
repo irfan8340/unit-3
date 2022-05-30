@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    #navbar {
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      padding: 0px 50px;
+      background-color: teal;
+    }
+
+    #navbar>div {
+
+      margin-right: 25px;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      margin-right: 10px;
+    }
+
+    /* menu section*/
+
+    #menu {
+      width: 80%;
+      margin: 50px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px 25px;
+    }
+
+    #menu>div {
+      border-radius: 10px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    }
+
+    #menu>div>img {
+      height: 60%;
+      width: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #add_to_bucket {
+      border-radius: 6px;
+      padding: 10px 20px;
+      background-color: teal;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar">
+    <!--Add navbar divs here-->
+    <!-- Link to bucket.html -->
+    <div>
+      <a href="#">Login</a>
+      <a href="#">Signup</a>
+      <a href="bucket.html">Bucket</a>
+    </div>
+    <div id="coffee_count">
+      <p>0</p>
+      <!--Show total number of coffee added to bucket here, do not add anything only Total count. Not even "Count - 5" but like this "5" -->
+    </div>
+  </div>
+
+  <div id="menu">
+    <!--Show coffee list here in grid format-->
+    <!-- add an add to bucket button to each item, give it HTML id as 'add_to_bucket' -->
+  </div>
+</body>
+
+</html>
+
+<script>
+
+  // https://masai-mock-api.herokuapp.com/coffee/menu
+
+  let bucketArr = JSON.parse(localStorage.getItem("coffee")) || [];
+  let count = localStorage.getItem("coffeeCount") || 0;
+  let total = localStorage.getItem("total_amount") || 0;
+  document.querySelector("#coffee_count>p").innerText = count;
+
+  async function getData() {
+
+    let url = `https://masai-mock-api.herokuapp.com/coffee/menu`
+
+    try {
+
+      let res = await fetch(url)
+      let data = await res.json()
+      console.log(data.menu.data)
+      displayData(data.menu.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getData()
+
+  function displayData(data) {
+
+    let menu = document.getElementById("menu")
+    menu.innerHTML = null;
+
+    data.forEach(function (elem) {
+
+      let card = document.createElement("div")
+
+      let image = document.createElement("img")
+      image.src = elem.image;
+
+      let title = document.createElement("h3")
+      title.innerText = elem.title;
+
+      let des = document.createElement("p")
+      des.innerText = elem.description;
+
+      let price = document.createElement("p")
+      price.innerText = elem.price;
+
+      let btn = document.createElement("button")
+      btn.innerText = "Add to bucket"
+      btn.setAttribute("id", "add_to_bucket")
+      btn.addEventListener("click", function () {
+        addToBucket(elem)
+      })
+
+      card.append(image, title, des, price, btn)
+      menu.append(card)
+    })
+  }
+
+
+  function addToBucket(elem) {
+
+    bucketArr.push(elem)
+    count++;
+    total = Number(total) + elem.price;
+    localStorage.setItem("coffee", JSON.stringify(bucketArr))
+    localStorage.setItem("coffeeCount", count)
+    localStorage.setItem("total_amount", total)
+
+    // showing the count, how many coffee added to bucket.
+    document.querySelector("#coffee_count>p").innerText = count;
+  }
+</script>
