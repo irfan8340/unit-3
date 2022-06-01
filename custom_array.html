@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Array</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+
+    class CustomArray {
+
+        constructor() {
+            this.length = 0;
+            this.array = [];
+        }
+
+        push(elem) {
+            this.array[this.length] = elem;
+            this.length++;
+        }
+
+        pop() {
+            this.array.pop();
+            this.length--;
+        }
+
+        top() {
+            return this.array[this.length - 1];
+        }
+
+        print(){
+            let out = [];
+            this.array.forEach((elem)=>{
+                out.push(elem)
+            })
+            console.log(out)
+        }
+
+        printReverse(){
+
+            console.log(this.array.reverse());
+        }
+
+        size() {
+            return this.length;
+        }
+    }
+
+    let arr = new CustomArray();
+    arr.push(1);
+    arr.push(2);
+    arr.push(3);
+    arr.push(4);
+    arr.push(15);
+
+    arr.pop();
+    
+    arr.print()
+    arr.printReverse()
+
+    console.log(arr.size());
+</script>
