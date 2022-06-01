@@ -93,5 +93,6 @@ nav{
 h3{
     font-size: 1em;
     word-spacing: 2px;
-    line-height: 25px;
+    line-height: 22px;
+    margin: 0px 10px;
 }

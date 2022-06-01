@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automobile inheritence</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+
+        class AutoMobile{
+
+            constructor(brand, engine, body){
+                this.brand = brand;
+                this.wheels = 4;
+                this.stiaring = true;
+                this.body = body;
+                this.headlight = 2;
+                this.backlight = 2;
+                this.engine = engine;
+            }
+        }
+
+        let car = new AutoMobile("Tata", "500 horsepower", "curve");
+
+        class SmartCar extends AutoMobile {
+
+            constructor(brand, engine, body, gps, camera, roof) {
+                super(brand, engine, body);
+                this.gps = gps;
+                this.camera = camera;
+                this.roof = roof;
+            }
+        }
+
+        let newcar = new SmartCar("Audi", "5000 kHz", "curve", "Modern Gps", "Parking Camera", "Automatic");
+
+        console.log(newcar)
+</script>
